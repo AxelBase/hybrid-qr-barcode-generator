@@ -1,0 +1,212 @@
+/* src/app.css */
+
+/* --- Variables --- */
+:root {
+  /* Light Mode Defaults */
+  --primary-bg: #f4f7f6;
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.9);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  
+  --color-text-main: #231A24; /* Steel Blue as Text */
+  --color-text-muted: #546e7a;
+  --color-accent: #231A24;    /* Steel Blue as Accent */
+  --color-accent-hover: #34495e;
+  --color-highlight: #3498db; /* Bright blue for gradients */
+  
+  --input-bg: rgba(255, 255, 255, 0.8);
+  
+  /* Blob Colors (Light) */
+  --blob-color-1: #dae2f8;
+  --blob-color-2: #d6a4a4;
+  
+  --radius-lg: 24px;
+  --radius-pill: 50px;
+}
+
+/* --- Dark Mode Overrides --- */
+[data-bs-theme="dark"] {
+  --primary-bg: #231A24; /* Steel Blue as Background */
+  --glass-bg: rgba(35, 26, 36, 0.6); 
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  
+  --color-text-main: #e0e6ed;
+  --color-text-muted: #94a3b8;
+  --color-accent: #66afe9; /* Light blue accent for contrast */
+  --color-accent-hover: #3498db;
+  --color-highlight: #6dd5ed;
+  
+  --input-bg: rgba(15, 23, 42, 0.3);
+  
+  /* Blob Colors (Dark) */
+  --blob-color-1: #1a121b; /* Darker shade of steel blue */
+  --blob-color-2: #2c3e50;
+}
+
+/* --- Global & Reset --- */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+  background: var(--primary-bg);
+  color: var(--color-text-main);
+  transition: background-color 0.5s ease, color 0.5s ease;
+  padding-bottom: 80px; /* Space for fixed footer */
+}
+
+/* --- Animated Background Blobs --- */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  width: 70vw;
+  height: 70vw;
+  border-radius: 50%;
+  z-index: -1;
+  filter: blur(80px);
+  opacity: 0.6;
+  animation: floatBlob 25s infinite alternate ease-in-out;
+  transition: background-color 0.5s ease;
+}
+
+body::before {
+  background: var(--blob-color-1);
+  top: -30%;
+  left: -20%;
+}
+
+body::after {
+  background: var(--blob-color-2);
+  bottom: -30%;
+  right: -20%;
+  animation-delay: -5s;
+}
+
+@keyframes floatBlob {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(60px, 40px) scale(1.1); }
+}
+
+/* --- Glassmorphism Utilities --- */
+.glass, .glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  color: var(--color-text-main);
+  transition: all 0.3s ease;
+}
+
+.glass-card {
+  border-radius: var(--radius-lg);
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  border-color: rgba(255,255,255, 0.5);
+}
+
+/* --- Inputs & Form Elements --- */
+.form-control, .form-select {
+  background-color: var(--input-bg) !important;
+  border: 2px solid var(--glass-border) !important;
+  color: var(--color-text-main) !important;
+  border-radius: 15px;
+  padding: 12px;
+}
+
+.form-control:focus, .form-select:focus {
+  background-color: var(--input-bg) !important;
+  box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.2);
+  border-color: var(--color-accent) !important;
+}
+
+/* --- Typography --- */
+h1, h2, h3, h4, h5 {
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--color-text-main);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-text-main), var(--color-highlight));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* --- Buttons --- */
+.btn {
+  border-radius: var(--radius-pill);
+  padding: 10px 25px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+.btn-primary {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--primary-bg); /* Contrast text against button */
+}
+
+/* Fix text color inside primary button for dark mode specifically if needed */
+[data-bs-theme="dark"] .btn-primary {
+    color: #1a121b; 
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #11998e, #38ef7d);
+  border: none;
+  color: white;
+}
+.btn-success:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(56, 239, 125, 0.4);
+}
+
+/* --- Image Styling --- */
+.img-fluid.border {
+    border: none !important;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* --- Footer --- */
+.custom-footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--glass-border);
+    color: var(--color-text-muted);
+    padding: 1rem 0;
+    font-size: 0.85rem;
+    z-index: 999;
+}
+.footer-link {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+.footer-link:hover {
+    color: var(--color-accent);
+}

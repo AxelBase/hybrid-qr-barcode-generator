@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://axelbase.github.io/hybrid-qr-barcode-generator/sitemap.xml
