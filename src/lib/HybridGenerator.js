@@ -1,14 +1,10 @@
-// src/lib/HybridGenerator.js – FINAL DECRYPTABLE VERSION
-
 import { getComplexityOptions } from './Complexity.js';
 import { getJsonRefNo } from './jsonExporter.js';
 import { getTxtRefNo } from './txtExporter.js';
 
-// Master secret parts – split for obfuscation
-// Scanner will have the same parts to reconstruct
-const jsonRefNo = getJsonRefNo(); // "Axel2025"
-const txtRefNo = getTxtRefNo(); // "HybridKey!"
-const finalRefNo = jsonRefNo + txtRefNo; // "Axel2025HybridKey!"
+const jsonRefNo = getJsonRefNo();
+const txtRefNo = getTxtRefNo();
+const finalRefNo = jsonRefNo + txtRefNo;
 
 export async function generateHybrid(secret, complexity = 'medium') {
   try {
@@ -16,19 +12,15 @@ export async function generateHybrid(secret, complexity = 'medium') {
 
     if (typeof CryptoJS === 'undefined') throw new Error('CryptoJS not loaded');
 
-    // Generate random salt (per-hybrid uniqueness)
     const salt = CryptoJS.lib.WordArray.random(16);
 
-    // Derive per-hybrid key from master + salt (PBKDF2-like, but simple for JS)
     const derivedKey = CryptoJS.PBKDF2(finalRefNo, salt, { keySize: 4, iterations: 1000 });
 
-    // Encrypt
     const encrypted = CryptoJS.AES.encrypt(secret.trim(), derivedKey, { iv: salt });
     const ciphertext = encrypted.toString();
 
-    // Split: QR gets salt + first half, Barcode gets second half
     const mid = Math.ceil(ciphertext.length / 2);
-    const part1 = salt.toString() + '|' + ciphertext.slice(0, mid); // Salt needed for decryption
+    const part1 = salt.toString() + '|' + ciphertext.slice(0, mid);
     const part2 = ciphertext.slice(mid);
 
     const tempDiv = document.createElement('div');
