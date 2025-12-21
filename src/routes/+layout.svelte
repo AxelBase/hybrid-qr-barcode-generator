@@ -1,7 +1,7 @@
 <script>
   import '../app.css';
   import { base } from '$app/paths';
-  import { fly, slide } from 'svelte/transition';
+  import { fly } from 'svelte/transition';
 
   // --- PayPal / Buy Me A Coffee Logic ---
   const paypalUsername = 'AxelLab427'; 

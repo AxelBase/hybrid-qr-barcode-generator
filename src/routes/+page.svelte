@@ -3,6 +3,7 @@
   import FileUpload from '../components/FileUpload.svelte';
   import { generateHybrid, generateBatch } from '$lib/HybridGenerator';
   import { parseFile } from '$lib/FileParser';
+  import { fly } from 'svelte/transition';
 
   let input = '';
   let complexity = 'medium';
@@ -210,11 +211,6 @@
           </div>
         {/if}
       </section>
-
-<!-- src/routes/+page.svelte – About, How to Use, FAQ Sections (550–600 words each) -->
-<script>
-  import { base } from '$app/paths';
-</script>
 
 <!-- ABOUT SECTION -->
 <section id="about" class="py-5 scroll-margin-offset">
